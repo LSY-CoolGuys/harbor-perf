@@ -3,9 +3,6 @@ WORKDIR /app
 ADD . /app
 RUN cd /app \
     && go env -w GOPROXY=https://goproxy.cn,direct \
-    && apk add --no-cache make \
-    && cd xk6-harbor \
-    && make build \
     && go mod tidy \
     && go build -o  mage mage.go \
     && sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
