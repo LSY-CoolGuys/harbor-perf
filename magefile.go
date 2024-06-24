@@ -86,19 +86,23 @@ func Prepare() error {
 }
 
 // Execute a specific test
-func Run(test string) error {
+func Run(test []string) error {
 	mg.Deps(EnsureK6, mkOutputDir)
 
-	scripts, err := filepath.Glob(fmt.Sprintf("./scripts/test/%s.js", test))
-	mgx.Must(err)
+	scripts, err := make([]string), error
+	for _, v := range test {
+		subScripts, err := filepath.Glob(fmt.Sprintf("./scripts/test/%s.js", v))
+		mgx.Must(err)
+		if len(scripts) == 0 {
+			mgx.Must(fmt.Errorf("test \"%s\" not found", test))
 
-	if len(scripts) == 0 {
-		mgx.Must(fmt.Errorf("test \"%s\" not found", test))
+		}
+		scripts = append(scripts, subScripts)
 	}
 
 	env := addHarborEnv(nil)
 
-	args := addVusAndIterationsArgs(getK6RunArgs(scripts[0]))
+	args := addVusAndIterationsArgs(getK6RunArgs(scripts))
 
 	if err := sh.RunWithV(env, K6Command, args...); err != nil {
 		return err
