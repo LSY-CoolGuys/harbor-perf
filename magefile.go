@@ -102,15 +102,17 @@ func Run(test string) error {
 			mgx.Must(fmt.Errorf("test \"%s\" not found", v))
 		}
 
-		scripts = append(scripts, subScripts)
+		scripts = append(scripts, subScripts[0])
 	}
 
 	env := addHarborEnv(nil)
 
-	args := addVusAndIterationsArgs(getK6RunArgs(scripts))
+	for _, script := range scripts {
+		args := addVusAndIterationsArgs(getK6RunArgs(script))
 
-	if err := sh.RunWithV(env, K6Command, args...); err != nil {
-		return err
+		if err := sh.RunWithV(env, K6Command, args...); err != nil {
+			return err
+		}
 	}
 
 	return nil
