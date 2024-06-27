@@ -9,5 +9,7 @@ import (
 // by running `go run mage.go TARGET`.
 // See https://magefile.org/zeroinstall/
 func main() {
-	fmt.Printf("测试发生错误，退出码%d", mage.Main())
+	if flags := mage.Main(); flags != 0 {
+		fmt.Printf("测试发生错误，退出码%d")
+	}
 }
