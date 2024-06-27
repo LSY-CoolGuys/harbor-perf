@@ -89,11 +89,11 @@ func Prepare() error {
 func Run(test string) error {
 	mg.Deps(EnsureK6, mkOutputDir)
 
-	listTest := make([]string)
+	listTest := make([]string, 0)
 	if strings.Contains(test, "@") {
 		listTest = strings.Split(test, "@")
 	}
-	scripts := make([]string)
+	scripts := make([]string, 0)
 	for _, v := range listTest {
 		subScripts, err := filepath.Glob(fmt.Sprintf("./scripts/test/%s.js", v))
 		mgx.Must(err)
