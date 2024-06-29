@@ -92,6 +92,8 @@ func Run(test string) error {
 	listTest := make([]string, 0)
 	if strings.Contains(test, "@") {
 		listTest = strings.Split(test, "@")
+	} else {
+		listTest = append(listTest, test)
 	}
 	scripts := make([]string, 0)
 	for _, v := range listTest {

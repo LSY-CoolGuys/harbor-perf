@@ -17,7 +17,7 @@ RUN cd /app \
 
 
 
-FROM gcr.m.daocloud.io/distroless/base@sha256:5e3fac1733c75e0e879a9770724e3960610a5cfbbfb5366559fbc334fe86c249 AS final
+FROM mcr.microsoft.com/cbl-mariner/distroless/debug:2.0
 WORKDIR /app
 
 ENV HARBOR_SIZE "small"
@@ -26,7 +26,6 @@ ENV HARBOR_ITERATIONS 200
 ENV HARBOR_REPORT true
 ENV K6_ALWAYS_UPDATE false
 ENV K6_QUIET false
-ENV K6_JSON_OUTPUT true
 ENV K6_PROMETHEUS_RW_INSECURE_SKIP_TLS_VERIFY false
 ENV K6_PROMETHEUS_RW_TREND_AS_NATIVE_HISTOGRAM true
 ENV K6_PROMETHEUS_RW_TREND_STATS=p(95),p(99),min,max
