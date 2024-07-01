@@ -1,0 +1,17 @@
+{
+  "values": {
+    "Container": {
+      "BasicOperationsOnContainer": 0.2131212,
+      "ListingContainer": 0.2131212,
+      "StartContainerFromScratch": 0.2131212
+    },
+    "Image": {
+      "ListingImage": 0.2131212,
+      "BasicOperationsOnImage": 0.2131212
+    },
+    "PodSandbox": {
+      "ListingPodSandbox": 0.2131212,
+      "LifecycleOfPodSandbox": 0.2131212
+    }
+  }
+}
