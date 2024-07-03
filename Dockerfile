@@ -4,6 +4,7 @@ ARG VERSION=latest
 ARG GO_PKG=go.k6.io/k6/lib/consts
 ARG PERF_PKG=github.com/goharbor/xk6-harbor
 RUN git clone https://github.com/goharbor/xk6-harbor.git \
+    && go env -w GOPROXY=https://goproxy.cn,direct \
     && cd xk6-harbor \
     && git rev-parse --short HEAD > commit.txt \
     && CGO_ENABLED=0 go build -ldflags="-extldflags -static -X  ${GO_PKG}.VersionDetails=$(cat commit.txt)" -o k6-harbor ./cmd/k6/main.go
@@ -38,10 +39,10 @@ ENV K6_PROMETHEUS_RW_TREND_AS_NATIVE_HISTOGRAM true
 ENV K6_PROMETHEUS_RW_TREND_STATS=p(95),p(99),min,max
 
 COPY --from=builder /app/magef /app/mage
-COPY --from=builder /app/k6-harbor /usr/local/bin/k6-harbor
-COPY --from=builder /app/package.json /app/package.json
-COPY --from=modules /app/node_modules /app/node_modules
-COPY --from=builder /app/scripts /app/scripts
+COPY --from=builder /app/xk6-harbor/k6-harbor /usr/local/bin/
+COPY --from=builder /app/package.json /app/
+COPY --from=modules /app/node_modules /app/
+COPY --from=builder /app/scripts /app/
 
 
 
